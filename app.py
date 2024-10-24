@@ -37,9 +37,16 @@ def detect_emotion_from_image(img):
         max_index = np.argmax(predictions[0])
         predicted_emotion = emotion_labels[max_index]
         confidence = np.max(predictions[0]) * 100
-        emotions.append({'emotion': predicted_emotion, 'confidence': confidence})
+        emotions.append({'x': x, 'emotion': predicted_emotion, 'confidence': confidence})
 
-    return emotions
+    # Sort detected faces by x-coordinate for left-to-right detection
+    emotions_sorted = sorted(emotions, key=lambda item: item['x'])
+
+    # Remove 'x' key from sorted emotions
+    for emotion in emotions_sorted:
+        del emotion['x']
+
+    return emotions_sorted
 
 # Function to process video and detect emotions
 def detect_emotion_from_video(video_path):
@@ -69,7 +76,6 @@ def detect_emotion_from_video(video_path):
             predicted_emotion = emotion_labels[max_index]
             confidence = np.max(predictions[0]) * 100
             
-            # Store the detected emotion with confidence for this frame
             frame_result.append({'emotion': predicted_emotion, 'confidence': confidence})
 
         frame_emotions.append(frame_result)
@@ -126,11 +132,10 @@ def upload_video():
     temp_file_path = os.path.join('uploads', filename)
     file.save(temp_file_path)
 
-    # Detect emotions from video
     frame_emotions = detect_emotion_from_video(temp_file_path)
-
     os.remove(temp_file_path)
 
+    # Create a summary of emotions detected
     summary = {}
     for frame in frame_emotions:
         for emotion in frame:

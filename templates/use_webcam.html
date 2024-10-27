@@ -46,7 +46,7 @@
                     if (data.length === 0) {
                         document.getElementById('result').innerHTML = '<p>No faces detected in the image.</p>';
                     } else {
-                        let resultText = "<h3>Detected Emotion (Left to Right):</h3>";
+                        let resultText = "<h3>Detected Emotion</h3>";
                         data.forEach((emotion, index) => {
                             resultText += `<p>Person ${index + 1}: Emotion: <strong>${emotion.emotion}</strong>, Confidence: ${emotion.confidence.toFixed(1)}%</p>`;
                         });

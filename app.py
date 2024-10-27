@@ -9,14 +9,9 @@ import base64
 
 app = Flask(__name__)
 
-# Ensure 'uploads' directory exists for temporary file storage
-os.makedirs('uploads', exist_ok=True)
-
-# Load the model and weights from environment variables or default paths
-model_path = os.getenv("MODEL_JSON", "model.json")
-weights_path = os.getenv("MODEL_H5", "model.h5")
-model = model_from_json(open(model_path, "r").read())
-model.load_weights(weights_path)
+# Load the model and weights
+model = model_from_json(open("model.json", "r").read())
+model.load_weights('model.h5')
 
 # Load face detection model
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -171,4 +166,4 @@ def detect_frame():
     return jsonify(emotions)
 
 if __name__ == '__main__':
-    app.run(debug=os.getenv("FLASK_DEBUG", "False") == "True")
+    app.run(debug=True)

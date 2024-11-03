@@ -25,13 +25,13 @@ ENV/
 *~
 *.bak
 
-# Uploads folder (if you don't want to commit uploaded files)
+# Uploads folder
 uploads/
 
 # TensorFlow SavedModel files
 saved_model/
 
-# Model files (since you don’t include model files like model.h5 and model.json in the repo)
+# Model files
 *.h5
 *.json
 
